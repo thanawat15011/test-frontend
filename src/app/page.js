@@ -1,95 +1,61 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
+"use client";
+import { useState } from "react";
+import Paperbase from "./layout/page";
+import {
+  Box,
+  Tab,
+  Tabs,
+  Typography
+} from "@mui/material";
+import {
+  TabPanel,
+  TabContext
+} from "@mui/lab";
+import Engagement from "./component/Engagement";
+import CardComponent from "./component/CardComponent";
+import ChartComponent from "./component/ChartComponent";
+import { typeView } from "./component/store/store";
+import { useRecoilValue,RecoilRoot } from "recoil";
 export default function Home() {
+  const [value, setValue] = useState(1);
+  const typeViewValue = useRecoilValue(typeView)
+  console.log('typeViewValue', typeViewValue)
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <Paperbase>
+      <TabContext value={value}>
+        <Box sx={{ width: "100%", bgcolor: "background.paper",borderBottom: "1px solid black", }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            centered
+            sx={{ borderBottom: 1, borderColor: "divider" }}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+            <Tab
+              label="Submission"
+              value={0}
+              sx={{ borderBottom: "1px solid black" }}
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+            <Tab
+              label="Engagement"
+              value={1}
+              sx={{ borderBottom: "1px solid black" }}
+            />
+          </Tabs>
+          <TabPanel value={0}>
+            {/* <Typography>Item One Panel</Typography> */}
+          </TabPanel>
+          <TabPanel value={1}>
+            <Engagement/>
+          </TabPanel>
+        </Box>
+      </TabContext>
+      <Box>
+        {typeViewValue == 0 ? <CardComponent/>: <ChartComponent/>}
+      
+      </Box>
+    </Paperbase>
   );
 }
