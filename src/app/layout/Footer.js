@@ -1,9 +1,12 @@
+"use client"
 import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import PhoneIcon from '@mui/icons-material/Phone';
+import Box from '@mui/material/Box';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Paper from '@mui/material/Paper';
 import {
   CheckCircle,
   Send,
@@ -11,20 +14,24 @@ import {
   Settings,
   Mode
 } from '@mui/icons-material';
-export default function Footer() {
-  const [value, setValue] = React.useState(3);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+export default function SimpleBottomNavigation() {
+  const [value, setValue] = React.useState(0);
 
   return (
-    <Tabs value={value} onChange={handleChange} aria-label="icon label tabs example" sx={{ width: '100%' }}>
-      <Tab icon={<Mode />} label="Write" value={0} sx={{ minWidth: 0, width: '20%' }}/>
-      <Tab icon={<CheckCircle />} label="FAVORITES" value={1} sx={{ minWidth: 0, width: '20%' }}/>
-      <Tab icon={<Send />} label="Report" value={2} sx={{ minWidth: 0, width: '20%' }}/>
-      <Tab icon={<PieChart />} label="NEARBY" value={3} sx={{ minWidth: 0, width: '20%' }}/>
-      <Tab icon={<Settings />} label="Setting" value={4} sx={{ minWidth: 0, width: '20%' }}/>
-    </Tabs>
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      >
+        <BottomNavigationAction label="Write" icon={<Mode />} />
+        <BottomNavigationAction label="Favorites" icon={<CheckCircle />} /> {/* รูปไม่ชัด */}
+        <BottomNavigationAction label="Report" icon={<Send />} />
+        <BottomNavigationAction label="Report" icon={<PieChart />} />{/* รูปไม่ชัด */}
+        <BottomNavigationAction label="Setting" icon={<Settings />} />
+      </BottomNavigation>
+      </Paper>
   );
 }
